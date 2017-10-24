@@ -1,0 +1,4 @@
+Outputs/simulations/*
+.Rhistory
+nohup.out
+Figures/GIFplots/*

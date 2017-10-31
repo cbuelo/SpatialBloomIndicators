@@ -1,4 +1,4 @@
-Outputs/simulations/*
+Outputs/simulations/*/*.RData
 .Rhistory
 nohup.out
 Figures/GIFplots/*

@@ -14,8 +14,6 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 	# ===============================================
 	# Figure 1: example grids
 	# ===============================================
-
-	# option 1: just grids
 	load(file.path(".", "Outputs", "simulations", "StochasticRuns_baseCase", lowInputFile))
 	grid_low = system_output[, , fig1time, "phytos"]
 	load(file.path(".", "Outputs", "simulations", "StochasticRuns_baseCase", mediumInputFile))
@@ -24,16 +22,21 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 	grid_high = system_output[, , fig1time, "phytos"]
 
 	Range = range(c(grid_low, grid_mod, grid_high))
-
-	jpeg(file.path(".", "Figures", "Figure1.jpg"), width=1200, height=400)
-	par(mfrow=c(1,3), oma=c(1,2,1,2), mar=c(2,2,2,2))
+  # plot grids
+	jpeg(file.path(".", "Figures", "Figure1.jpg"), width=1250, height=400)
+	par(mfrow=c(1,3), oma=c(1,2,1,11), mar=c(1.5,1.5,1.5,1.5))
 	image(grid_low, zlim=Range, col=tim.colors(), axes=FALSE) 
 	text(diff(par("usr")[1:2])*.1, sum(par("usr")[3:4])*.85, labels="A", cex=5, col="white") 
 	image(grid_mod, zlim=Range, col=tim.colors(), axes=FALSE)
 	text(diff(par("usr")[1:2])*.1, sum(par("usr")[3:4])*.85, labels="B", cex=5, col="white") 
 	image(grid_high, zlim=Range, col=tim.colors(), axes=FALSE)
-	text(diff(par("usr")[1:2])*.1, sum(par("usr")[3:4])*.85, labels="C", cex=5, col="white") 
+	text(diff(par("usr")[1:2])*.1, sum(par("usr")[3:4])*.85, labels="C", cex=5, col="white")
+  # add legend
+	par(oma=c(0,0,0,0))
+	image.plot( legend.only=TRUE, zlim=Range, smallplot=c(0.77, 0.8, 0.1, 0.9), legend.lab = "Phytoplankton density", legend.cex = 1.5, legend.line = 6, axis.args = list(cex.axis=1.3))
+
 	dev.off()
+
 
 	# ===============================================
 	# Figure 2: Squeal stats through time

@@ -33,7 +33,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 	text(diff(par("usr")[1:2])*.1, sum(par("usr")[3:4])*.85, labels="C", cex=5, col="white")
   # add legend
 	par(oma=c(0,0,0,0))
-	image.plot( legend.only=TRUE, zlim=Range, smallplot=c(0.77, 0.8, 0.1, 0.9), legend.lab = "Phytoplankton density", legend.cex = 1.5, legend.line = 6, axis.args = list(cex.axis=1.3))
+	image.plot( legend.only=TRUE, zlim=Range, smallplot=c(0.77, 0.8, 0.1, 0.9), legend.lab = "Phytoplankton conc.", legend.cex = 1.5, legend.line = 6, axis.args = list(cex.axis=1.3))
 
 	dev.off()
 

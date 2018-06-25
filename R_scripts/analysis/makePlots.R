@@ -55,20 +55,20 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 	mtext("Mean", side=2, outer=FALSE, cex=3, line=7)
 	lines(baseCase[baseCase$inputRate == 0.9 & baseCase$time <= fig2maxTime, c("time", "mean")], ylim=Range_mean, col="#FF9500", lwd=12) #tomato2, goldenrod2, orange, darkorange2
 	lines(baseCase[baseCase$inputRate == 1.6 & baseCase$time <= fig2maxTime, c("time", "mean")], ylim=Range_mean, col="#00AC6B", lwd=12) #orchid2, violetred, mediumpurple2
-	text(diff(par("usr")[1:2])*.1 + par("usr")[1], diff(par("usr")[3:4])*.85 + par("usr")[3], labels="A", cex=5, col="black")
+	text(diff(par("usr")[1:2])*.025 + par("usr")[1], diff(par("usr")[3:4])*.875 + par("usr")[3], labels="A", cex=5, col="black")
 	legend(x=fig2maxTime-50, y=0.25, legend = c("i = 0.35", "i = 0.9", "i = 1.6"), col=c("#534ED9", "#FF9500", "#00AC6B"), lwd=8, bty="n", cex=2.5)
 
 	plot(baseCase[baseCase$inputRate == 0.35 & baseCase$time <= fig2maxTime, c("time", "sd")], ylim=Range_sd, col="#534ED9", type="l", lwd=12, xlab="", ylab="", cex.lab=4, cex.axis=3)
 	mtext("Standard  Deviation", side=2, outer=FALSE, cex=3, line=7)
 	lines(baseCase[baseCase$inputRate == 0.9 & baseCase$time <= fig2maxTime, c("time", "sd")], ylim=Range_sd, col="#FF9500", lwd=12)
 	lines(baseCase[baseCase$inputRate == 1.6 & baseCase$time <= fig2maxTime, c("time", "sd")], ylim=Range_sd, col="#00AC6B", lwd=12)
-	text(diff(par("usr")[1:2])*.1 + par("usr")[1], diff(par("usr")[3:4])*.9 + par("usr")[3], labels="B", cex=5, col="black") 
+	text(diff(par("usr")[1:2])*.025 + par("usr")[1], diff(par("usr")[3:4])*.925 + par("usr")[3], labels="B", cex=5, col="black") 
 
 	plot(baseCase[baseCase$inputRate == 0.35 & baseCase$time <= fig2maxTime, c("time", "ACrange")], ylim=Range_acR, col="#534ED9", type="l", lwd=12, xlab="", ylab="", cex.lab=4, cex.axis=3)
 	mtext("AC  Range", side=2, outer=FALSE, cex=3, line=7)
 	lines(baseCase[baseCase$inputRate == 0.9 & baseCase$time <= fig2maxTime, c("time", "ACrange")], ylim=Range_acR, col="#FF9500", lwd=12)
 	lines(baseCase[baseCase$inputRate == 1.6 & baseCase$time <= fig2maxTime, c("time", "ACrange")], ylim=Range_acR, col="#00AC6B", lwd=12)#, lty="dashed")
-	text(diff(par("usr")[1:2])*.1 + par("usr")[1], diff(par("usr")[3:4])*.9 + par("usr")[3], labels="C", cex=5, col="black") 
+	text(diff(par("usr")[1:2])*.025 + par("usr")[1], diff(par("usr")[3:4])*.925 + par("usr")[3], labels="C", cex=5, col="black") 
 
 	mtext("Time", side=1, outer=TRUE, cex=3, line=1.75)
 	dev.off()
@@ -117,7 +117,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 		geom_vline(xintercept=c(3, 10.5), col="grey", linetype="dashed") + theme(legend.position="none") + 
 		theme(axis.title.x=element_blank()) + 
 		theme(plot.margin=unit(c(0.65, 0.5, 1.5, 0.25), "lines")) + 
-		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), ,legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
+		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
 		scale_colour_manual(values=cbPalette) +
 		ylab("Standard Deviation") +
 		theme(axis.text.y = element_text(angle = 90, hjust = 0.5, margin=margin(r=5))) +
@@ -134,6 +134,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 		theme(axis.title.x=element_blank()) + 
 		theme(plot.margin=unit(c(0.65, 0.5, 1.5, 0.25), "lines")) + 
 		scale_colour_manual(values=cbPalette)+
+	  scale_y_log10()+
 		ylab("AC Range") +
 		theme(axis.text.y = element_text(angle = 90, hjust = 0.5, margin=margin(r=5))) +
 		annotate("text", x=1, y=1*max(combined_phys$ACrange,na.rm=TRUE), hjust=.2, label="C", size=12)
@@ -184,7 +185,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 
 	jpeg(file.path(".", "Figures", "Figure3.jpg"), width=1500, height=1000)
 	panels = plot_grid(p1_phys, p2_phys, p3_phys, p4_phys, p5_phys, p6_phys, ncol=2, align="vh")
-	ggdraw(add_sub(panels, "Input rate (i)", vpadding=grid::unit(.25,"lines"),y=0.5, x=0.5, vjust=0, size=24))
+	ggdraw(add_sub(panels, "Phosphorus Input Rate (i)", vpadding=grid::unit(.25,"lines"),y=0.5, x=0.5, vjust=0, size=24))
 	dev.off()
 
 	# ====================================================================
@@ -225,7 +226,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 		geom_vline(xintercept=c(5), col="grey", linetype="dashed") + theme(legend.position="none") + 
 		theme(axis.title.x=element_blank()) + 
 		theme(plot.margin=unit(c(0.25, 0.5, 1.5, 0.25), "lines")) + 
-		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), ,legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
+		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
 		scale_colour_manual(values=cbPalette[2]) + 
 		scale_y_log10(name="Standard Deviation", limits=c(0.003, 0.1), breaks=lab_seq_hiSD, labels = trans_format("log10", math_format(10^.x))) + 
 		theme(axis.text.y = element_text(angle = 90, hjust = 0.5), axis.text=element_text(size = 16)) +
@@ -241,7 +242,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 		geom_vline(xintercept=c(5), col="grey", linetype="dashed") + theme(legend.position="none") + 
 		theme(axis.title.x=element_blank()) + 
 		theme(plot.margin=unit(c(0.25, 0.5, 1.5, 0.25), "lines")) + 
-		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), ,legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
+		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
 		scale_colour_manual(values=cbPalette[2]) + 
 		scale_y_log10(name="AC Range", limits=c(1, 50), breaks=lab_seq_liACd, labels = trans_format("log10", math_format(10^.x))) + 
 		theme(axis.text.y = element_text(angle = 90, hjust = 0.5), axis.text=element_text(size = 16)) +
@@ -255,7 +256,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 		theme(plot.margin = unit(c(0.2, 0.2, 0.45, 0.45), "in")) + 
 		theme(axis.title.y=element_text(hjust=0.5, size=26)) + 
 		geom_vline(xintercept=c(5), col="grey", linetype="dashed") + theme(legend.position="none") + theme(axis.title.x=element_blank()) + theme(plot.margin=unit(c(0.25, 0.5, 1.5, 0.25), "lines")) + 
-		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), ,legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
+		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
 		scale_colour_manual(values=cbPalette[2]) + 
 		scale_y_log10(name="AC Range", limits=c(1.1, 175), breaks=lab_seq_hiACd, labels = trans_format("log10", math_format(10^.x))) + 
 		theme(axis.text.y = element_text(angle = 90, hjust = 0.5), axis.text=element_text(size = 16)) +
@@ -272,7 +273,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 		geom_vline(xintercept=c(5), col="grey", linetype="dashed") + theme(legend.position="none") + 
 		theme(axis.title.x=element_blank()) + 
 		theme(plot.margin=unit(c(0.25, 0.5, 1.5, 0.25), "lines")) + 
-		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), ,legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
+		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
 		scale_colour_manual(values=cbPalette[2]) + 
 		scale_y_log10(name="Moran's I", limits=c(0.3, 1.02), breaks=lab_seq_lowMoransI, labels = trans_format("log10", math_format(10^.x))) + 
 		theme(axis.text.y = element_text(angle = 90, hjust = 0.5), axis.text=element_text(size = 16)) +
@@ -288,7 +289,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 		geom_vline(xintercept=c(5), col="grey", linetype="dashed") + theme(legend.position="none") + 
 		theme(axis.title.x=element_blank()) + 
 		theme(plot.margin=unit(c(0.25, 0.5, 1.5, 0.25), "lines")) + 
-		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), ,legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
+		theme(legend.position=c(0.8, 0.7), legend.key.size=unit(3, "lines"), legend.text=element_text(size=14), legend.title=element_text(size=18), legend.key.width=unit(0.75, "lines")) + 
 		scale_colour_manual(values=cbPalette[2]) + 
 		scale_y_log10(name="Moran's I", limits=c(0.2, 1.02), breaks=lab_seq_highMoransI, labels = trans_format("log10", math_format(10^.x))) + 
 		theme(axis.text.y = element_text(angle = 90, hjust = 0.5), axis.text=element_text(size = 16)) +
@@ -296,7 +297,7 @@ makePlots <- function(lowInputFile, mediumInputFile, highInputFile, fig1time=100
 
 	jpeg(file.path(".", "Figures", "Figure4.jpg"), width=1200, height=1350)
 	panels = plot_grid(lowI_sd, highI_sd, lowI_ACd, highI_ACd, lowI_moransI, highI_moransI, ncol=2, align="vh")
-	ggdraw(add_sub(panels, "Input rate (i)", vpadding=grid::unit(.25,"lines"),y=0.5, x=0.5, vjust=0, size=24))
+	ggdraw(add_sub(panels, "Phosphorus Input Rate (i)", vpadding=grid::unit(.25,"lines"),y=0.5, x=0.5, vjust=0, size=24))
 	dev.off()
 
 }
